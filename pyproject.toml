@@ -16,4 +16,7 @@ dependencies = ["pooch", "pyyaml"]
 test = ["pytest"]
 
 [project.urls]
-Home = "https://unscrewed.org"
+Home = "https://github.com/matthew-brett/unscrewed"
+
+[project.scripts]
+us-update-config = "unscrewed.update_config:cli"
