@@ -5,7 +5,7 @@ on:
   pull_request:
 
 env:
-  PKG_NAME: nipraxis
+  PKG_NAME: unscrewed
 
 jobs:
   tests:

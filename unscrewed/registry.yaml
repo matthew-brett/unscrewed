@@ -1,5 +1,5 @@
 # Parameters for Pooch data registry
-pkg_name: 'nipraxis'
+pkg_name: 'unscrewed'
 base_url: "https://raw.githubusercontent.com/nipraxis/nipraxis-data/{version}/"
 version_dev: "main"
 cache_env_var: "NIPRAXIS_LOCAL_CACHE"
