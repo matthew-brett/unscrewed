@@ -33,11 +33,12 @@ class Fetcher:
             # Use the default cache folder for the operating system
             path=pooch.os_cache(config['pkg_name']),
             # The remote data is on Github
-            base_url=config['base_url'],
-            version=config['data_version'],
+            base_url=config.get('base_url', ''),
+            version=config.get('data_version'),
             # If this is a development version, get the data from the "main" branch
             version_dev=config.get('version_dev', 'main'),
-            registry=config['files'],
+            registry=config.get('files'),
+            urls=config.get('urls'),
             # The name of an environment variable that can overwrite the cache path.
             env=config.get('cache_env_var')
         )
@@ -78,8 +79,3 @@ class Fetcher:
             if cache_fname:
                 return cache_fname
         return self.registry.fetch(rel_url)
-
-
-_CONFIG = Path(__file__).parent / 'registry.yaml'
-_FETCHER = Fetcher(_CONFIG)
-fetch_file = _FETCHER.fetch_file
