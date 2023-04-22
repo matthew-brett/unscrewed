@@ -9,6 +9,13 @@ from .fetcher import Fetcher
 
 def update_config(config, repo_dir=None):
     config = Fetcher(config).config
+    # Look for cloned version of repository.
+    # Check repo is clean, pushed.
+    # Get current branch, put into config['version_dev']
+    # Get current commit, put into config['data_version']
+    # Calculate hashes for each file not ignored.
+    # Insert in config['files']
+    # Consider checking external files.
     return config
 
 
