@@ -23,7 +23,7 @@ import pkg_resources
 import unscrewed
 
 _config_file = pkg_resources.resource_filename("your_package", "registry.yaml")
-_fetcher = unscrewed.Fetcher(_config_file)
+fetcher = unscrewed.Fetcher(_config_file)
 fetch_file = _fetcher.fetch_file
 ```
 
