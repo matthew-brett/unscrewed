@@ -1,4 +1,4 @@
-""" Fetch data from repository, or maybe local cache
+""" Use Pooch to fetch data from repository, or staging cache
 """
 
 from os import environ
@@ -11,6 +11,20 @@ import pooch
 
 
 class Fetcher:
+    """ Class to implement read from registry config, fetching of files
+
+    The class uses the Pooch package to configure registry, fetch files.
+
+    It extends your vanilla Pooch by having a *staging registry* that you can
+    configure, with an environment variable.  This is another local location at
+    which you can store files, usually one accessible to multiple users, so
+    they can use files in common.
+
+    Parameters
+    ----------
+    config : str, Path, stream or dict
+        Configuration file or mapping for data registry.
+    """
 
     def __init__(self, config):
         self.config = self._read_config(config)
