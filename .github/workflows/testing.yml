@@ -30,7 +30,7 @@ jobs:
           pip install .
       - name: Run tests
         run: |
-          pytest --log-level DEBUG --cov-config=.coveragerc --cov=$PKG_NAME --doctest-modules --pyargs $PKG_NAME
+          pytest --log-level DEBUG --cov-config=.coveragerc --cov=$PKG_NAME --doctest-modules tests
       - name: Collect code coverage data
         run: |
           coverage xml --data-file=tmp/.coverage
