@@ -15,11 +15,11 @@ jobs:
         python-version: [3.7, 3.8, 3.9, "3.10", "3.11"]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           submodules: true
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v3
         with:
           python-version: ${{ matrix.python-version }}
       - name: Install coverage dependencies
@@ -30,8 +30,7 @@ jobs:
           pip install .
       - name: Run tests
         run: |
-          pytest --log-level DEBUG --cov-config=.coveragerc --cov=$PKG_NAME \
-            --cov-report xml:.cov.xml --doctest-modules tests
+          pytest --log-level DEBUG --cov-config=.coveragerc --cov=$PKG_NAME --doctest-modules tests
       - name: Collect code coverage data
         run: |
           coverage xml --data-file=.coverage
@@ -39,4 +38,4 @@ jobs:
         uses: codecov/codecov-action@v3
         with:
           fail_ci_if_error: true
-          files: .cov.xml
+          files: coverage.xml

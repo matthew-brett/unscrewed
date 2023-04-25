@@ -6,4 +6,4 @@ __pycache__/
 dist/
 *.orig
 .coverage
-.cov.xml
+coverage.xml
