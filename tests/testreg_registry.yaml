@@ -4,7 +4,7 @@ base_url: "https://raw.githubusercontent.com/matthew-brett/unscrewed/{version}/t
 version_dev: "main"
 cache_env_var: "TESTREG_LOCAL_CACHE"
 staging_env_var: "TESTREG_STAGING_CACHE"
-data_version: '0.4'
+data_version: "0.1a2"
 files:
   'ds114_sub009_t2r1_cond.txt': 'md5:5cb29aed9c9f330afe1af7e69f8aad18'
   'new_cond.txt': 'md5:b40dc95801267932a9f273f02ac05d1e'
