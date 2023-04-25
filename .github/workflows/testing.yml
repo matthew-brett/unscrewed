@@ -33,7 +33,7 @@ jobs:
           pytest --log-level DEBUG --cov-config=.coveragerc --cov=$PKG_NAME --doctest-modules tests
       - name: Collect code coverage data
         run: |
-          coverage xml --data-file=tmp/.coverage
+          coverage xml --data-file=.coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
