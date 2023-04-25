@@ -8,27 +8,28 @@ from hashlib import sha1
 import unscrewed.fetcher as usf
 
 
-CAMERA_HASH = 'af7257977f30797d4b3ea7dd15fa362d4fe8c37e'
+LOGO_SHA = 'cd8157960cf256e53c4e9722c7c34b8d38eb24ec'
 
 
-def assert_hash(fname, hash):
+def assert_hash(fname, sha):
     with open(fname, 'rb') as fobj:
         contents = fobj.read()
-    assert sha1(contents).hexdigest() == hash
+    assert sha1(contents).hexdigest() == sha
 
 
 def test_camera(tmp_path, monkeypatch):
     local_cache = tmp_path / 'unscrewed-local'
     staging_cache = tmp_path / 'unscrewed-staging'
-    monkeypatch.delenv("NIPRAXIS_STAGING_CACHE", raising=False)
-    monkeypatch.setenv("NIPRAXIS_LOCAL_CACHE", str(local_cache))
-    config = Path(__file__).parent / 'nipraxis_registry.yaml'
+    monkeypatch.delenv("TESTREG_STAGING_CACHE", raising=False)
+    monkeypatch.setenv("TESTREG_LOCAL_CACHE", str(local_cache))
+    config = Path(__file__).parent / 'testreg_registry.yaml'
     fetcher = usf.Fetcher(config)
-    fname = fetcher('camera.txt')
+    fname = fetcher('dsfe_logo.png')
+    assert_hash(fname, LOGO_SHA)
     assert fname.startswith(str(local_cache))
-    monkeypatch.setenv("NIPRAXIS_STAGING_CACHE", str(staging_cache))
-    fname = fetcher('camera.txt')
+    monkeypatch.setenv("TESTREG_STAGING_CACHE", str(staging_cache))
+    fname = fetcher('dsfe_logo.png')
     assert fname.startswith(str(local_cache))
     shutil.move(local_cache, staging_cache)
-    fname = fetcher('camera.txt')
+    fname = fetcher('dsfe_logo.png')
     assert fname.startswith(str(staging_cache))

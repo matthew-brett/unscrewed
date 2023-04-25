@@ -1,0 +1,13 @@
+# Parameters for Pooch data registry
+pkg_name: 'testreg'
+base_url: "https://raw.githubusercontent.com/matthew-brett/unscrewed/{version}/tests/testreg"
+version_dev: "main"
+cache_env_var: "TESTREG_LOCAL_CACHE"
+staging_env_var: "TESTREG_STAGING_CACHE"
+data_version: '0.4'
+files:
+  'ds114_sub009_t2r1_cond.txt': 'md5:5cb29aed9c9f330afe1af7e69f8aad18'
+  'new_cond.txt': 'md5:b40dc95801267932a9f273f02ac05d1e'
+  'ds114_sub009_t2r1_conv.txt': 'md5:839eadd4533af9d8aef0cf8d623ab139'
+  '24719.f3_beh_CHYM.csv': 'md5:ac1f4df5697bf356b2b060afd383430e'
+  'dsfe_logo.png': 'md5:77ea8e9bccebc8ea762693e238938bd7'

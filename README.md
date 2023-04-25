@@ -11,9 +11,9 @@ pip install unscrewed
 ## Usage
 
 First prepare a `registry.yaml` file, like the one in
-`unscrewed/tests/nipraxis_registry.yaml`.  Put it in your package, say in the
-`your_package` directory (that contains the `__init__.py` file).  Maybe call it
-`registry.yaml`.
+`unscrewed/tests/testreg_registry.yaml`.  Put it in your package, say in the
+`your_package` directory (that contains the `__init__.py` file).  Maybe call
+it `registry.yaml`.
 
 In some module, say `your_package/data.py`
 
