@@ -7,16 +7,30 @@ import yaml
 
 from .fetcher import Fetcher
 
-def update_config(config, repo_dir=None):
+
+def update_config(config, repo_url,
+                  repo_dir=None,
+                  external_dir=None,
+                  default_hasher='md5'):
     config = Fetcher(config).config
-    # Look for cloned version of repository.
-    # Check repo is clean, pushed.
-    # Get current branch, put into config['version_dev']
-    # Get current commit, put into config['data_version']
-    # Calculate hashes for each file not ignored.
-    # Insert in config['files']
+    repo_dir = get_check_repo(config, repo_url, repo_dir)
+    # Calculate hashes for each file not ignored, set
+    config['files'], config['urls'] = calc_hashes(config, repo_dir,
+                                                  external_dir,
+                                                  default_hasher)
     # Consider checking external files.
     return config
+
+
+def get_check_repo(config, repo_url, repo_dir):
+    # If repo_dir is None, clone data repository to tempory
+    # Look for cloned version of repository.
+    # Check repo is clean, pushed.
+    return repo_dir
+
+
+def calc_hashes(config, repo_dir, external_dir=None, default_hasher='md5'):
+    return config['files'], config.get('urls')
 
 
 def write_config(config, fname):
