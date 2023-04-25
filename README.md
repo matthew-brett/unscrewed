@@ -24,7 +24,6 @@ import unscrewed
 
 _config_file = pkg_resources.resource_filename("your_package", "registry.yaml")
 fetcher = unscrewed.Fetcher(_config_file)
-fetch_file = _fetcher.fetch_file
 ```
 
 Say you have a file `my_data_file.nii` configured in your `registry.yaml` file above.
@@ -32,7 +31,7 @@ Say you have a file `my_data_file.nii` configured in your `registry.yaml` file a
 Now you can fetch it like this:
 
 ```python
-from your_package.data import fetch_file
+from your_package.data import fetcher
 
-fname = fetch_file('my_data_file.nii')
+fname = fetcher('my_data_file.nii')
 ```
