@@ -64,7 +64,6 @@ def test_check_clone(tmp_path):
         check_clone(BASE_REPO, version, tmp_path)
     # Reset to correct correct - no error.
     check_call(['git', 'checkout', version], cwd=out_path)
-    print(check_output(['git', 'status'], cwd=out_path, text=True))
     check_clone(BASE_REPO, version, tmp_path)
     # Set to dirty.
     bad_file = out_path / 'bad_file.txt'

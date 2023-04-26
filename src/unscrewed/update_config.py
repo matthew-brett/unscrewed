@@ -68,7 +68,8 @@ def check_clone(cloneable, version, repos_path):
 
 def check_repo_at_commit(out_path, version):
     desired_commit = check_output(
-        ['git', 'rev-parse', version],
+        # https://stackoverflow.com/a/1862542
+        ['git', 'rev-list', '-n', '1', version],
         cwd=out_path, text=True)
     actual_commit = check_output(
         ['git', 'rev-parse', 'HEAD'],
