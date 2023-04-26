@@ -3,7 +3,7 @@
 
 from argparse import ArgumentParser, RawDescriptionHelpFormatter
 from urllib.parse import urlparse
-from subprocess import check_call
+from subprocess import check_call, check_output
 from tempfile import TemporaryDirectory
 from pathlib import Path
 
@@ -60,11 +60,29 @@ def check_add_repo(url, version, repos_path):
 def check_clone(cloneable, version, repos_path):
     out_path = repos_path / cloneable2out_sdir(cloneable)
     if out_path.is_dir():
-        # Check version
-        pass
+        check_repo_at_commit(out_path, version)
     else:
         check_call(['git', 'clone', cloneable, str(out_path)])
     return out_path
+
+
+def check_repo_at_commit(out_path, version):
+    desired_commit = check_output(
+        ['git', 'rev-parse', version],
+        cwd=out_path, text=True)
+    actual_commit = check_output(
+        ['git', 'rev-parse', 'HEAD'],
+        cwd=out_path, text=True)
+    if not desired_commit == actual_commit:
+        raise RepoError(
+            f'repo at {out_path} at commit {actual_commit}'
+            f'but should be at {desired_commit}')
+    status = check_output(
+        ['git', 'status', '--porcelain'],
+        cwd=out_path, text=True).strip()
+    if status:
+        raise RepoError(
+            f'repo at {out_path} not clean with status {status}')
 
 
 def cloneable2out_sdir(cloneable):
