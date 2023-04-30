@@ -16,7 +16,7 @@ readme = "README.md"
 
 [project.optional-dependencies]
 dev = ["pre-commit", "pooch[style,test]"]
-style = ["flake8", "black", "isort"]
+style = ["black", "flake8", "Flake8-pyproject", "isort"]
 test = ["pytest"]
 
 [project.urls]
@@ -24,3 +24,17 @@ Home = "https://github.com/matthew-brett/unscrewed"
 
 [project.scripts]
 us-update-config = "unscrewed.update_config:cli"
+
+[tool.flake8]
+exclude = [
+  ".git",
+  "__pycache__",
+  "build",
+  "dist",
+]
+extend-ignore = ["E203"]
+max-complexity = 10
+max-line-length = 88
+per-file-ignores = [
+  '__init__.py:F401',
+]
