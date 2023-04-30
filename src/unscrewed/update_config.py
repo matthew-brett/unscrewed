@@ -13,13 +13,13 @@ from .fetcher import Fetcher
 
 def update_config(config, repos_path, default_hasher="md5"):
     config = Fetcher(config).config
-    file_defs = get_file_defs(config)
+    # file_defs = get_file_defs(config)
     repos_path.mkdir(parents=True, exist_ok=True)
     return config  # For now.
-    check_add_repos(file_defs, repos_path)
-    fill_check_hashes(file_defs, default_hasher)
-    fill_config(config, file_defs)
-    return config
+    # check_add_repos(file_defs, repos_path)
+    # fill_check_hashes(file_defs, default_hasher)
+    # fill_config(config, file_defs)
+    # return config
 
 
 def get_file_defs(config):
@@ -68,7 +68,7 @@ def check_repo_at_commit(out_path, version):
         text=True,
     )
     actual_commit = check_output(["git", "rev-parse", "HEAD"], cwd=out_path, text=True)
-    if not desired_commit == actual_commit:
+    if desired_commit != actual_commit:
         raise RepoError(
             f"repo at {out_path} at commit {actual_commit}"
             f"but should be at {desired_commit}"
@@ -128,5 +128,5 @@ def cli():
     args = parser.parse_args()
     if args.repos_dir is None:
         args.repos_dir = Path(TemporaryDirectory().name)
-    config = update_config(args.config_fname, repos_dir=args.repos_dir)
+    config = update_config(args.config_fname, repos_path=args.repos_dir)
     write_config(config, args.config_fname)
