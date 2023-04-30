@@ -1,18 +1,22 @@
 [build-system]
-requires = ["flit_core >=3.2,<4"]
 build-backend = "flit_core.buildapi"
+requires = ["flit_core >=3.2,<4"]
 
 [project]
-name = "unscrewed"
 authors = [{name = "Matthew Brett", email = "matthew.brett@gmail.com"}]
-classifiers = ["License :: OSI Approved :: BSD License",
-               "Programming Language :: Python :: 3"]
-dynamic = ["version", "description"]
-readme = "README.md"
-license = {file = "LICENSE"}
+classifiers = [
+  "License :: OSI Approved :: BSD License",
+  "Programming Language :: Python :: 3",
+]
 dependencies = ["pooch", "pyyaml"]
+dynamic = ["version", "description"]
+license = {file = "LICENSE"}
+name = "unscrewed"
+readme = "README.md"
 
 [project.optional-dependencies]
+dev = ["pre-commit", "pooch[style,test]"]
+style = ["black", "flake8", "Flake8-pyproject", "isort"]
 test = ["pytest"]
 
 [project.urls]
@@ -20,3 +24,17 @@ Home = "https://github.com/matthew-brett/unscrewed"
 
 [project.scripts]
 us-update-config = "unscrewed.update_config:cli"
+
+[tool.flake8]
+exclude = [
+  ".git",
+  "__pycache__",
+  "build",
+  "dist",
+]
+extend-ignore = ["E203"]
+max-complexity = 10
+max-line-length = 88
+per-file-ignores = [
+  '__init__.py:F401',
+]
