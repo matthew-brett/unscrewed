@@ -5,6 +5,6 @@ repository, caching in a known location to avoid repeat downloads.
 
 """
 
-__version__ = '0.1a2'
+__version__ = "0.1a2"
 
 from .fetcher import Fetcher

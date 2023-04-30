@@ -1,17 +1,15 @@
 """ Use Pooch to fetch data from repository, or staging cache
 """
-
-from os import environ
 from io import StringIO
+from os import environ
 from pathlib import Path
 
-import yaml
-
 import pooch
+import yaml
 
 
 class Fetcher:
-    """ Class to implement read from registry config, fetching of files
+    """Class to implement read from registry config, fetching of files
 
     The class uses the Pooch package to configure registry, fetch files.
 
@@ -29,36 +27,34 @@ class Fetcher:
     def __init__(self, config):
         self.config = self._read_config(config)
         self.registry = self._build_registry(self.config)
-        self.data_version = self.config['data_version']
+        self.data_version = self.config["data_version"]
 
     def _read_config(self, config):
-        """ Read configuration from filename, Path, fileobj or mapping.
-        """
+        """Read configuration from filename, Path, fileobj or mapping."""
         if isinstance(config, str):
             config = Path(config)
         if isinstance(config, Path):
             config = StringIO(config.read_text())
-        if hasattr(config, 'read'):
+        if hasattr(config, "read"):
             config = yaml.load(config, Loader=yaml.SafeLoader)
         return config
 
     def _build_registry(self, config):
-        """ Build and return Pooch registry object
-        """
+        """Build and return Pooch registry object"""
         return pooch.create(
             # Use the default cache folder for the operating system
-            path=pooch.os_cache(config['pkg_name']),
+            path=pooch.os_cache(config["pkg_name"]),
             # The remote data is on Github
-            base_url=config.get('base_url', ''),
-            version=config.get('data_version'),
+            base_url=config.get("base_url", ""),
+            version=config.get("data_version"),
             # If this is a development version, get the data from the
             # specified branch (default 'main')
-            version_dev=config.get('version_dev', 'main'),
-            registry=config.get('files'),
-            urls=config.get('urls'),
+            version_dev=config.get("version_dev", "main"),
+            registry=config.get("files"),
+            urls=config.get("urls"),
             # The name of an environment variable that can overwrite the cache
             # path.
-            env=config.get('cache_env_var')
+            env=config.get("cache_env_var"),
         )
 
     def _from_staging_cache(self, rel_url, staging_cache):
@@ -67,16 +63,17 @@ class Fetcher:
             return None
         pth = Path(staging_cache).resolve() / self.data_version / rel_url
         action, verb = pooch.core.download_action(pth, known_hash)
-        if action == 'update':
+        if action == "update":
             pooch.utils.get_logger().info(
                 f"'{rel_url}' in '{staging_cache}/{self.data_version}' "
-                "but hash does not match; looking in local cache / registry.")
+                "but hash does not match; looking in local cache / registry."
+            )
             return None
-        if action == 'fetch':
+        if action == "fetch":
             return str(pth)
 
     def __call__(self, rel_url):
-        """ Fetch data file from local cache, or registry
+        """Fetch data file from local cache, or registry
 
         Parameters
         ----------
@@ -90,7 +87,7 @@ class Fetcher:
             The absolute path (including the file name) of the file in the local
             storage.
         """
-        staging_cache = environ.get(self.config.get('staging_env_var'))
+        staging_cache = environ.get(self.config.get("staging_env_var"))
         if staging_cache:
             cache_fname = self._from_staging_cache(rel_url, staging_cache)
             if cache_fname:
